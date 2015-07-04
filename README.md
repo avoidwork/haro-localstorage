@@ -18,15 +18,17 @@ DataStores will be `prefix`.
 var haro = require('haro'),
     store;
 
-// Register the adapter
-haro.register('local', require('haro-localStorage'));
-
 // Configure a store to utilize the adapter
 store = haro(null, {
   adapters: {
     local: "myData"
   }
 });
+
+// Register the adapter
+store.register('local', require('haro-localStorage'));
+
+// Ready to `load()`, `batch()` or `set()`!
 ```
 
 ## License
