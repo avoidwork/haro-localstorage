@@ -26,31 +26,15 @@
 				result = localStorage.getItem(prefix + "_" + key);
 
 				if (result !== null) {
-					result = JSON.parse(result);
-					store.set(key, result, true).then(function (rec) {
-						defer.resolve(rec);
-					}, function (e) {
-						defer.reject(e);
-					});
+					defer.resolve(JSON.parse(result));
 				} else {
 					defer.reject(new Error("Record not found in localStorage"));
 				}
-
-				store.set(key, result, true).then(function (rec) {
-					defer.resolve(rec);
-				}, function (e) {
-					defer.reject(e);
-				});
 			} else {
 				result = localStorage.getItem(prefix);
 
 				if (result !== null) {
-					result = JSON.parse(result);
-					store.batch(result, "set").then(function (args) {
-						defer.resolve(args);
-					}, function (e) {
-						defer.reject(e);
-					});
+					defer.resolve(JSON.parse(result));
 				} else {
 					defer.resolve([]);
 				}
