@@ -11,8 +11,8 @@ on the client, or server (in RAM). It is a [partially persistent data structure]
 
 ### How to use
 Require the adapter & register it with `haro.register(key, fn)`. The key must match the `store.adapters` key. The prefix 
-will be used as `prefix_` for the `localStorage` items. Records will be have keys as `prefix_storeId_key`, while 
-DataStores will have `prefix_storeId`.
+will be used if set, otherwise `store.id` will be the prefix for localStorage items. Records will be have keys as `prefix_key`, while 
+DataStores will be `prefix`.
 
 ```javascript
 var haro = require('haro'),
@@ -24,7 +24,7 @@ haro.register('local', require('haro-localStorage'));
 // Configure a store to utilize the adapter
 store = haro(null, {
   adapters: {
-    local: "prefix"
+    local: "myData"
   }
 });
 ```

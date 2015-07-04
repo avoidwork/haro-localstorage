@@ -18,12 +18,12 @@
 	function local (store, op, key, data) {
 		let defer = deferred(),
 			record = key !== undefined && store.has(key),
-			prefix = store.adapters.local,
+			prefix = store.adapters.local || store.id,
 			result;
 
 		if (op === "get") {
 			if (record) {
-				result = localStorage.getItem(prefix + "_" + store.id + "_" + key);
+				result = localStorage.getItem(prefix + "_" + key);
 
 				if (result !== null) {
 					result = JSON.parse(result);
@@ -42,7 +42,7 @@
 					defer.reject(e);
 				});
 			} else {
-				result = localStorage.getItem(prefix + "_" + store.id);
+				result = localStorage.getItem(prefix);
 
 				if (result !== null) {
 					result = JSON.parse(result);
@@ -60,9 +60,9 @@
 		if (op === "remove") {
 			try {
 				if (record) {
-					localStorage.removeItem(prefix + "_" + store.id + "_" + key);
+					localStorage.removeItem(prefix + "_" + key);
 				} else {
-					localStorage.removeItem(prefix + "_" + store.id);
+					localStorage.removeItem(prefix);
 				}
 
 				defer.resolve(true);
@@ -74,9 +74,9 @@
 		if (op === "set") {
 			try {
 				if (record) {
-					localStorage.setItem(prefix + "_" + store.id + "_" + key, JSON.stringify(data));
+					localStorage.setItem(prefix + "_" + key, JSON.stringify(data));
 				} else {
-					localStorage.setItem(prefix + "_" + store.id, JSON.stringify(store.toArray()));
+					localStorage.setItem(prefix, JSON.stringify(store.toArray()));
 				}
 
 				defer.resolve(true);
