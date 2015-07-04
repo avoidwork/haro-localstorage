@@ -9,7 +9,7 @@ function graffiti (arg) {
 }
 
 module.exports = function (grunt) {
-	var banner = graffiti("haro-localStorage " + grunt.file.readJSON("package.json").version);
+	var banner = graffiti("haro-localstorage " + grunt.file.readJSON("package.json").version);
 
 	grunt.initConfig({
 		pkg : grunt.file.readJSON("package.json"),

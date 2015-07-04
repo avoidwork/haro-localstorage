@@ -1,12 +1,12 @@
 # haro-localstorage
 
-[![build status](https://secure.travis-ci.org/avoidwork/haro-localStorage.svg)](http://travis-ci.org/avoidwork/haro-localStorage)
+[![build status](https://secure.travis-ci.org/avoidwork/haro-localstorage.svg)](http://travis-ci.org/avoidwork/haro-localstorage)
 
 [Harō](http://haro.rocks) is a modern immutable DataStore built with ES6 features, which can be wired to an API for a 
 complete feedback loop. It is un-opinionated, and offers a plug'n'play solution to modeling, searching, & managing data 
 on the client, or server (in RAM). It is a [partially persistent data structure](https://en.wikipedia.org/wiki/Persistent_data_structure), by maintaining version sets of records in `versions` ([MVCC](https://en.wikipedia.org/wiki/Multiversion_concurrency_control)).
 
-***haro-localStorage*** is a persistent storage adapter, providing 'auto saving' behavior, as well as the ability to 
+***haro-localstorage*** is a persistent storage adapter, providing 'auto saving' behavior, as well as the ability to 
 `save()` & `load()` the entire DataStore.
 
 ### How to use

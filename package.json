@@ -1,6 +1,6 @@
 {
   "name": "haro-localstorage",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "localStorage persistent storage adapter for Harō",
   "main": "lib/index.js",
   "repository": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/avoidwork/haro-localstorage.git"
   },
   "keywords": [
-    "mongodb",
+    "localStorage",
     "persistent storage",
     "adapter",
     "haro",
