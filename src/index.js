@@ -2,6 +2,7 @@
 
 (function (global) {
 	const Promise = global.Promise || require("es6-promise").Promise;
+	const localStorage = global.localStorage || require("localStorage");
 
 	function deferred () {
 		let promise, resolver, rejecter;
