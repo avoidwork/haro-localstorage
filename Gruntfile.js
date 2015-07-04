@@ -47,7 +47,7 @@ module.exports = function (grunt) {
 		},
 		uglify: {
 			options: {
-				banner: '/*\n' + banner + '\n\n<%= grunt.template.today("yyyy") %> <%= pkg.author.name %> <<%= pkg.author.email %>>\n*/\n',
+				banner: '/*\n' + banner + '\n\n<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n*/\n',
 				sourceMap: true,
 				sourceMapIncludeSources: true,
 				mangle: {
