@@ -17,7 +17,7 @@
 
 	function local (store, op, key, data) {
 		let defer = deferred(),
-			record = key !== undefined && store.has(key),
+			record = key !== undefined,
 			prefix = store.adapters.local || store.id,
 			result;
 
