@@ -1,4 +1,4 @@
-# haro-localStorage
+# haro-localstorage
 
 [![build status](https://secure.travis-ci.org/avoidwork/haro-localStorage.svg)](http://travis-ci.org/avoidwork/haro-localStorage)
 
@@ -26,7 +26,7 @@ store = haro(null, {
 });
 
 // Register the adapter
-store.register('local', require('haro-localStorage'));
+store.register('local', require('haro-localstorage'));
 
 // Ready to `load()`, `batch()` or `set()`!
 ```
