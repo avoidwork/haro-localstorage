@@ -19,50 +19,29 @@
 		let defer = deferred(),
 			record = key !== undefined,
 			prefix = store.adapters.local || store.id,
+			lkey = prefix + (record ? "_" + key : ""),
 			result;
 
 		if (op === "get") {
-			if (record) {
-				result = localStorage.getItem(prefix + "_" + key);
+			result = localStorage.getItem(lkey);
 
-				if (result !== null) {
-					defer.resolve(JSON.parse(result));
-				} else {
-					defer.reject(new Error("Record not found in localStorage"));
-				}
+			if (result !== null) {
+				defer.resolve(JSON.parse(result));
+			} else if (record) {
+				defer.reject(new Error("Record not found in localStorage"));
 			} else {
-				result = localStorage.getItem(prefix);
-
-				if (result !== null) {
-					defer.resolve(JSON.parse(result));
-				} else {
-					defer.resolve([]);
-				}
+				defer.resolve([]);
 			}
 		}
 
 		if (op === "remove") {
-			try {
-				if (record) {
-					localStorage.removeItem(prefix + "_" + key);
-				} else {
-					localStorage.removeItem(prefix);
-				}
-
-				defer.resolve(true);
-			} catch (e) {
-				defer.reject(e);
-			}
+			localStorage.removeItem(lkey);
+			defer.resolve(true);
 		}
 
 		if (op === "set") {
 			try {
-				if (record) {
-					localStorage.setItem(prefix + "_" + key, JSON.stringify(data));
-				} else {
-					localStorage.setItem(prefix, JSON.stringify(store.toArray()));
-				}
-
+				localStorage.setItem(lkey, JSON.stringify(record ? data : store.toArray()));
 				defer.resolve(true);
 			} catch (e) {
 				defer.reject(e);
