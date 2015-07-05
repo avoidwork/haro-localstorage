@@ -15,7 +15,7 @@
 		return {resolve: resolver, reject: rejecter, promise: promise};
 	}
 
-	function local (store, op, key, data) {
+	function adapter (store, op, key, data) {
 		let defer = deferred(),
 			record = key !== undefined,
 			prefix = store.adapters.local || store.id,
@@ -32,14 +32,10 @@
 			} else {
 				defer.resolve([]);
 			}
-		}
-
-		if (op === "remove") {
+		} else if (op === "remove") {
 			localStorage.removeItem(lkey);
 			defer.resolve(true);
-		}
-
-		if (op === "set") {
+		} else if (op === "set") {
 			try {
 				localStorage.setItem(lkey, JSON.stringify(record ? data : store.toArray()));
 				defer.resolve(true);
@@ -53,12 +49,12 @@
 
 	// Node, AMD & window supported
 	if (typeof exports !== "undefined") {
-		module.exports = local;
+		module.exports = adapter;
 	} else if (typeof define === "function") {
 		define(function () {
-			return local;
+			return adapter;
 		});
 	} else {
-		global.haroLocal = local;
+		global.haroLocalStorage = adapter;
 	}
 }(typeof global !== "undefined" ? global : window));
