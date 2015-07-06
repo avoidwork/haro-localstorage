@@ -3,6 +3,7 @@
 /src/
 /lib/index.min.js
 /lib/index.min.js.map
+/test/
 .eslintrc
 .git
 .gitignore

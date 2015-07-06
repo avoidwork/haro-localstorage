@@ -1,6 +1,6 @@
 {
   "name": "haro-localstorage",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "localStorage persistent storage adapter for Harō",
   "main": "lib/index.js",
   "repository": {
