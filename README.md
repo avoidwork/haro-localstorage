@@ -9,12 +9,11 @@ complete feedback loop. It is un-opinionated, and offers a plug'n'play solution 
 on the client, or server (in RAM). It is a [partially persistent data structure](https://en.wikipedia.org/wiki/Persistent_data_structure), by maintaining version sets of records in `versions` ([MVCC](https://en.wikipedia.org/wiki/Multiversion_concurrency_control)).
 
 ***haro-localstorage*** is a persistent storage adapter, providing 'auto saving' behavior, as well as the ability to 
-`save()` & `load()` the entire DataStore.
+`save()`, `load()` & `unload()` the entire DataStore.
 
 ### How to use
 Require the adapter & register it with `haro.register(key, fn)`. The key must match the `store.adapters` key. The prefix 
-will be used if set, otherwise `store.id` will be the prefix for localStorage items. Records will be have keys as `prefix_key`, while 
-DataStores will be `prefix`.
+will be used if set, otherwise `store.id` will be the prefix for localStorage items. Records will have localStorage keys as `prefix_key`.
 
 If loaded as from a `<script></script>` the adapter will be available as `haroLocalStorage`.
 

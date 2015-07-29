@@ -2,7 +2,7 @@ var adapter = require("../lib/index.js"),
 	haro = require("haro"),
 	localStorage = require("localStorage"),
 	data = [{guid: "abc", yay: true}, {guid: "def", yay: false}],
-	config = {key: "guid", logging: false, adapters: {local: "nodeunit"}};
+	config = {key: "guid", logging: false, adapters: {local: "nodeunit"}, versioning: false};
 
 function clone (arg) {
 	return JSON.parse(JSON.stringify(arg));
@@ -10,21 +10,23 @@ function clone (arg) {
 
 exports["get - datastore"] = {
 	setUp: function (done) {
+		var self = this;
+
 		this.data = clone(data);
 		this.localStorage = localStorage;
 		this.store = haro(null, config);
 		this.store.register("local", adapter);
 		this.key = this.store.adapters.local;
-		this.localStorage.setItem(this.key, JSON.stringify(this.data));
+		this.data.forEach(function (i) {
+			self.localStorage.setItem(self.key + "_" + i[self.store.key], JSON.stringify(i));
+		});
 		done();
 	},
 	test: function (test) {
-		var self = this,
-			result = JSON.parse(this.localStorage.getItem(this.key));
+		var self = this;
 
-		test.expect(3);
+		test.expect(2);
 		test.equal(this.store.total, 0, "Should be 0");
-		test.equal(result.length, 2, "Should be 2");
 		this.store.load("local").then(function () {
 			test.equal(self.store.total, 2, "Should be 2");
 			test.done();
@@ -40,7 +42,7 @@ exports["get - record"] = {
 		this.localStorage = localStorage;
 		this.store = haro(null, config);
 		this.store.register("local", adapter);
-		this.key = this.store.adapters.local + "_" + this.data[0];
+		this.key = this.store.adapters.local + "_" + this.data[0].guid;
 		this.localStorage.setItem(this.key, JSON.stringify(this.data[0]));
 		done();
 	},
@@ -82,9 +84,12 @@ exports["set - datastore"] = {
 			test.equal(self.store.total, 2, "Should be 2");
 			return self.store.save("local");
 		}, function () {
+			self.store.unload("local");
 			test.done();
 		}).then(function () {
-			var ldata = JSON.parse(self.localStorage.getItem(self.key));
+			var ldata = self.store.toArray().map(function (i) {
+				return JSON.parse(localStorage.getItem(self.key + "_" + i.guid));
+			});
 
 			test.equal(JSON.stringify(self.store.toArray()), JSON.stringify(ldata), "Should match");
 			return self.store.unload("local");
@@ -100,21 +105,23 @@ exports["set - datastore"] = {
 
 exports["set - record"] = {
 	setUp: function (done) {
+		var self = this;
+
 		this.data = clone(data);
 		this.localStorage = localStorage;
 		this.store = haro(null, config);
 		this.store.register("local", adapter);
 		this.key = this.store.adapters.local;
-		this.localStorage.setItem(this.key, JSON.stringify(this.data));
+		this.data.forEach(function (i) {
+			self.localStorage.setItem(self.key + "_" + i[self.store.key], JSON.stringify(i));
+		});
 		done();
 	},
 	test: function (test) {
-		var self = this,
-			result = JSON.parse(this.localStorage.getItem(this.key));
+		var self = this;
 
-		test.expect(6);
+		test.expect(5);
 		test.equal(this.store.total, 0, "Should be 0");
-		test.equal(result.length, 2, "Should be 2");
 		this.store.load("local").then(function () {
 			test.equal(self.store.total, 2, "Should be 2");
 			return self.store.set(null, {guid: "ghi", yay: true});
@@ -125,7 +132,7 @@ exports["set - record"] = {
 
 			test.equal(self.store.total, 3, "Should be 3");
 			test.equal(arg[0], record.guid, "Should match");
-			test.equal(self.store.limit(2, 1)[0][0], record.guid, "Should match");
+			test.equal(self.store.limit(1, 2)[0][0], record.guid, "Should match");
 			return self.store.unload("local");
 		}, function () {
 			test.done();
