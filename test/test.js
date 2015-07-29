@@ -168,9 +168,14 @@ exports["remove - datastore"] = {
 		}, function () {
 			test.done();
 		}).then(function () {
-			var ldata = JSON.parse(self.localStorage.getItem(self.key));
+			var regex = new RegExp("^" + self.key + "_"),
+				ldata;
 
-			test.equal(ldata, null, "Should match");
+			ldata = Object.keys(localStorage).filter(function (i) {
+				return regex.test(i);
+			});
+
+			test.equal(ldata.length, 0, "Should match");
 			test.done();
 		}, function () {
 			test.done();
