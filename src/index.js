@@ -1,19 +1,8 @@
 "use strict";
 
 (function (global) {
-	const Promise = global.Promise || require("es6-promise").Promise;
+	const deferred = require("tiny-defer");
 	const localStorage = global.localStorage || require("localStorage");
-
-	function deferred () {
-		let promise, resolver, rejecter;
-
-		promise = new Promise(function (resolve, reject) {
-			resolver = resolve;
-			rejecter = reject;
-		});
-
-		return {resolve: resolver, reject: rejecter, promise: promise};
-	}
 
 	function keys (prefix) {
 		var regex = new RegExp("^" + prefix + "_");

@@ -1,6 +1,6 @@
 {
   "name": "haro-localstorage",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "localStorage persistent storage adapter for Harō",
   "main": "lib/index.js",
   "repository": {
@@ -41,7 +41,7 @@
     "haro": "^1.5.1"
   },
   "dependencies": {
-    "es6-promise": "^2.1.1",
-    "localStorage": "^1.0.3"
+    "localStorage": "^1.0.3",
+    "tiny-defer": "^1.0.2"
   }
 }
