@@ -1,7 +1,7 @@
 "use strict";
 
 (function (global) {
-	const deferred = require("tiny-defer");
+	const deferred = global.deferred || require("tiny-defer");
 	const localStorage = global.localStorage || require("localStorage");
 
 	function keys (prefix) {
@@ -63,11 +63,11 @@
 	// Node, AMD & window supported
 	if (typeof exports !== "undefined") {
 		module.exports = adapter;
-	} else if (typeof define === "function") {
+	} else if (typeof define === "function" && define.amd) {
 		define(function () {
 			return adapter;
 		});
 	} else {
 		global.haroLocalStorage = adapter;
 	}
-}(typeof global !== "undefined" ? global : window));
+}(typeof window !== "undefined" ? window : global));
